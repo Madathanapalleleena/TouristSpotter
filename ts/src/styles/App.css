@@ -1,0 +1,92 @@
+/* src/styles/App.css */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+/* Navigation Bar */
+.navbar {
+  background-color: #003366;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  padding: 10px 15px;
+  transition: 0.3s ease;
+}
+
+.navbar a:hover {
+  background-color: #ffcc00;
+  color: #003366;
+  border-radius: 5px;
+}
+
+/* Main Container */
+.main-container {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+/* Buttons */
+.btn {
+  background-color: #ffcc00;
+  color: black;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.btn:hover {
+  background-color: #ff9900;
+  transform: scale(1.05);
+}
+
+/* Forms */
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .main-container {
+    padding: 30px 10px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
