@@ -1,0 +1,28 @@
+/* Fullscreen Background Carousel */
+.carousel-container {
+  position: fixed; /* Keeps it in the background */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1; /* Places it behind content */
+  overflow: hidden;
+}
+
+/* Ensure images properly cover the screen */
+.carousel .carousel-slider {
+  height: 100vh;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover; /* Prevents stretching */
+  image-rendering: crisp-edges;
+}
+
+/* Hide carousel dots and arrows for a cleaner look */
+.carousel .control-dots,
+.carousel .control-arrow {
+  display: none;
+}
