@@ -6,6 +6,8 @@ import gatewayOfIndia from "../assets/gatewayofindia.jpg";
 import keralaBackwaters from "../assets/keralabackwaters.jpg";
 import goldentemple from "../assets/goldentemple.jpg";
 import lighthouse from "../assets/lighthouse.jpg";
+import lotustemple from "../assets/lotustemple.jpg";
+import redfort from "../assets/redfort.jpg";
 import "../styles/TravelCarousel.css";
 
 const TravelCarousel = () => {
@@ -36,6 +38,13 @@ const TravelCarousel = () => {
         <div className="carousel-slide" key="lighthouse">
           <img src={lighthouse} alt="Lighthouse, Chennai" />
         </div>
+        <div className="carousel-slide" key="redfort">
+          <img src={redfort} alt="Red Fort, New Delhi" />
+        </div>
+        <div className="carousel-slide" key="lotustemple">
+          <img src={lotustemple} alt="Lotus Temple, New Delhi" />
+        </div>
+        
       </Carousel>
     </div>
   );
