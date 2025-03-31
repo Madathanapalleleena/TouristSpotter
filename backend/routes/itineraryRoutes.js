@@ -4,7 +4,6 @@ const UserPreferences = require("../models/UserPreferences");
 const Itinerary = require("../models/Itinerary");
 const { generateItinerary } = require("../services/openaiServices");
 
-// Generate and store itinerary
 router.get("/generate-itinerary/:userId", async (req, res) => {
   try {
     const preferences = await UserPreferences.findOne({ userId: req.params.userId });
@@ -13,13 +12,13 @@ router.get("/generate-itinerary/:userId", async (req, res) => {
       return res.status(404).json({ success: false, message: "User preferences not found" });
     }
 
-    // ✅ Format preferences correctly for OpenAI
+    // Format preferences correctly for OpenAI
     const formattedPreferences = preferences.getFormattedPreferences();
 
-    // ✅ Call OpenAI
+    // Call OpenAI to generate the itinerary
     const itineraryText = await generateItinerary(formattedPreferences);
 
-    // ✅ Store in MongoDB
+    // Store the itinerary in MongoDB
     const newItinerary = new Itinerary({
       userId: req.params.userId,
       preferences: formattedPreferences,
@@ -28,9 +27,10 @@ router.get("/generate-itinerary/:userId", async (req, res) => {
 
     await newItinerary.save();
 
+    // Respond with the generated itinerary
     res.json({ success: true, itinerary: itineraryText });
   } catch (error) {
-    console.error("❌ Error generating itinerary:", error);
+    console.error("Error generating itinerary:", error);
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
