@@ -19,7 +19,7 @@ const startServer = async () => {
 
     // ✅ Use routes AFTER database connection
     // ✅ Register routes for authentication & preferences
-    app.use("/api/users", require("./routes/userRoutes"));
+    //app.use("/api/users", require("./routes/userRoutes"));
     app.use("/api/preferences", preferencesRoutes);
 
     // ✅ Start the server
