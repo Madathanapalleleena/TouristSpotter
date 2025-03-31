@@ -14,7 +14,7 @@ Tourist Spotter is a **MERN stack** web application that helps users discover po
 ---
 
 ## 🏗️ Tech Stack
-- **Frontend:** React, Tailwind CSS
+- **Frontend:** React, HTML, CSS
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB (Mongoose ODM)
 - **APIs:** Geoapify, Wikipedia, Google Gemini AI
