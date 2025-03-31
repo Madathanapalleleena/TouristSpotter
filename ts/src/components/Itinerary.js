@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { fetchGeminiResponse } from "../services/geminiService"; // Import AI service
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { fetchGeminiResponse } from "../services/geminiService";
+import { marked } from "marked"; // ✅ Import Markdown parser
 import "../styles/Itinerary.css";
 
-const Itinerary = ({ userId }) => {
+const Itinerary = () => {
+  const location = useLocation();
+  const userId = location.state?.userId || localStorage.getItem("userId");
   const [itinerary, setItinerary] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -10,22 +14,27 @@ const Itinerary = ({ userId }) => {
   useEffect(() => {
     const fetchItinerary = async () => {
       try {
-        // First, try fetching from the backend
+        if (!userId) {
+          setError("User ID not found.");
+          return;
+        }
+
+        console.log("Fetching itinerary for userId:", userId);
+
         const response = await fetch(
-          `http://localhost:5000/api/itinerary/generate-itinerary/${userId}`
+          `http://localhost:5000/api/preferences/generate-itinerary/${userId}`
         );
         const data = await response.json();
+        console.log("API Response:", data); // ✅ Debugging step
 
-        if (data.success && data.itinerary) {
-          setItinerary(data.itinerary); // Use backend response
+        if (data.itinerary) {
+          setItinerary(marked(data.itinerary)); // ✅ Convert Markdown to HTML
+          setError("");
         } else {
-          console.warn("No itinerary found in DB. Fetching from Gemini...");
-          const aiResponse = await fetchGeminiResponse(
-            "Suggest a 3-day itinerary for a tourist in India."
-          );
-          setItinerary(aiResponse?.candidates?.[0]?.content || "No AI response.");
+          setError("No itinerary found.");
         }
       } catch (error) {
+        console.error("Error fetching itinerary:", error);
         setError("Error fetching itinerary.");
       } finally {
         setLoading(false);
@@ -40,15 +49,15 @@ const Itinerary = ({ userId }) => {
       <h2>Your Personalized Travel Plan</h2>
       {loading && <p>Loading itinerary...</p>}
       {error && <p className="error-text">{error}</p>}
-      {itinerary && (
-        <div id="itinerary-details">
-          {itinerary.split("\n").map((line, index) => (
-            <p key={index}>{line}</p>
-          ))}
-        </div>
+
+      {itinerary ? (
+        <div id="itinerary-details" dangerouslySetInnerHTML={{ __html: itinerary }} />
+      ) : (
+        <p>No itinerary found.</p>
       )}
     </div>
   );
 };
 
 export default Itinerary;
+
