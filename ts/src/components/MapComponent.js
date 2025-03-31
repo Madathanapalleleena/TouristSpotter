@@ -6,20 +6,20 @@ import "../styles/MapComponent.css";
 const MAP_API_KEY = process.env.REACT_APP_GEOAPIFY_API_KEY || "c028660ae68f4d5d812137b17af9711c";
 
 const categoryMapping = {
-  "Archaeological Sites": "tourism.attraction",
-  "Temples": "tourism.sights.place_of_worship.shrine",
-  "Coffee Shops": "catering.cafe",
+  "Archaeological Sites": "tourism.sights,heritage.culture",
+  "Temples": "tourism.sights,religion.place_of_worship",
+  "Coffee Shops": "catering.cafe,catering.restaurant",
   "Hill Stations": "natural.mountain",
-  "Beaches": "beach,beach.beach_resort",
-  "Wildlife & Safari": "leisure.park,national_park",
-  "Adventure Sports": "sport",
-  "Cultural Experiences": "entertainment.museum,entertainment.culture,tourism.sights.city_hall",
-  "Weekend Getaways": "natural,commercial.outdoor_and_sport",
-  "Pilgrimage Spots": "tourism.sights.place_of_worship",
-  "Foodie Dreams": "catering.restaurant,catering.food_court",
+  "Beaches": "natural.beach,leisure.park",
+  "Wildlife & Safari": "leisure.zoo,natural.park",
+  "Adventure Sports": "sport.extreme",
+  "Cultural Experiences": "heritage.culture",
+  "Weekend Getaways": "tourism.sights,natural.park",
+  "Pilgrimage Spots": "tourism.sights",
+  "Foodie Dreams": "catering.restaurant",
   "Trekking Spots": "natural.mountain",
-  "Relaxation Spots": "building.spa,leisure.spa,service.beauty",
-  "Romantic Places": "leisure.park,beach,natural.water,commercial.garden",
+  "Relaxation Spots": "leisure.spa,leisure.resort",
+  "Romantic Places": "tourism.sights,leisure.park",
 };
 
 const MapComponent = ({ userPreferences, onSelectionChange, userId }) => {
