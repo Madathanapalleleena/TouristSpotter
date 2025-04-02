@@ -1,5 +1,82 @@
+body {
+  background: url('../assets/white.jpg') no-repeat center center fixed;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+}
+
 .itinerary-container {
+  text-align: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.4); /* Darker overlay for better contrast */
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  margin: 50px auto;
+  color: #ffffff; /* Set text color to white */
+}
+
+.itinerary-header {
+  font-size: 30px;
+  font-weight: bold;
+  color: #ffffff; /* White text */
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+}
+
+.itinerary-list {
+  list-style: none;
+  padding: 0;
+}
+
+.itinerary-item {
+  background: rgba(255, 255, 255, 0.85); /* Light background for items */
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #ffffff; /* White text for items */
+}
+
+.itinerary-item:hover {
+  background-color: rgba(255, 255, 255, 1);
+  transition: 0.3s;
+}
+
+.itinerary-time {
+  font-size: 14px;
+  color: #ffffff; /* White text for time */
+}
+
+.itinerary-name {
+  font-size: 22px;
+  font-weight: 600;
+  color: #ffffff; /* White text for name */
+}
+
+.itinerary-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.itinerary-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+  .itinerary-item {
+    flex-direction: column;
     text-align: center;
-    padding: 20px;
   }
-  
+}
