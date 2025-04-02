@@ -13,27 +13,38 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
       return;
     }
+  
     setError("");
+    setSuccess("");
+  
     try {
       const response = await fetch("http://localhost:5000/api/users/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: formData.name, email: formData.email, password: formData.password }),
       });
+  
       const data = await response.json();
+  
       if (response.ok) {
-        setSuccess(data.message);
+        // ✅ Store JWT token in localStorage
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userId", data.user._id);
+        
+        setSuccess("Registration successful!");
       } else {
-        setError(data.message);
+        setError(data.error || "Registration failed");
       }
     } catch (err) {
       setError("Server error, please try again");
     }
   };
+  
 
   return (
     <div className="auth-container">
