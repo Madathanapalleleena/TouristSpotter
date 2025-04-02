@@ -3,6 +3,8 @@ require("dotenv").config(); // Load environment variables at the top
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db"); 
+
+const authRoutes = require("./routes/authRoutes"); // Import authentication routes
 const preferencesRoutes = require("./routes/preferences");
 //const preferencesRoutes = require("./routes/preferencesRoutes");
 const app = express();
@@ -18,6 +20,7 @@ const startServer = async () => {
     console.log("✅ MongoDB Connected Successfully");
 
     // ✅ Use routes AFTER database connection
+    app.use("/api/users", authRoutes);
     // ✅ Register routes for authentication & preferences
     //app.use("/api/users", require("./routes/userRoutes"));
     app.use("/api/preferences", preferencesRoutes);
