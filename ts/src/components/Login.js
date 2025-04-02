@@ -10,32 +10,37 @@ function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError('');
-    
+    setError("");
+  
     try {
-      const response = await fetch('http://localhost:5000/api/users/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("http://localhost:5000/api/users/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-
+  
       const data = await response.json();
-
+      console.log("Login Response:", data); // ✅ Debug response
+  
       if (!response.ok) {
-        throw new Error(data.message || 'Login failed');
+        throw new Error(data.error || "Login failed");
       }
-
-      // Store the token for authentication
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('userId', data.userId);
-
-      // Redirect to Preferences Page after successful login
-      navigate('/preferences');
-
+  
+      // ✅ Ensure user object exists before accessing _id
+      if (!data.user || !data.user._id) {
+        throw new Error("Invalid response from server: Missing user data");
+      }
+  
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("userId", data.user._id);
+  
+      navigate("/preferences");
+  
     } catch (error) {
       setError(error.message);
     }
   };
+  
 
   return (
     <div className="auth-container">
@@ -68,6 +73,14 @@ function Login() {
 }
 
 export default Login;
+
+
+
+
+
+
+
+
 
 
 
