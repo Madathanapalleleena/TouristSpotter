@@ -104,7 +104,9 @@ const MapComponent = ({ userPreferences, onSelectionChange, userId }) => {
           // ✅ If marker already exists, just update its icon
           if (existingMarkers.has(name)) {
             const existingMarker = existingMarkers.get(name);
-            existingMarker.setIcon(selectedPlaces.has(name) ? selectedIcon : defaultIcon);
+            const isSelected = [...selectedPlaces].some((p) => p.name === name);
+            existingMarker.setIcon(isSelected ? selectedIcon : defaultIcon);
+
             return placeData;
           }
   
@@ -120,23 +122,25 @@ const MapComponent = ({ userPreferences, onSelectionChange, userId }) => {
           marker.on("mouseout", () => marker.closePopup());
   
           marker.on("click", () => {
-            setSelectedPlaces((prev) => {
-              const newSet = new Set(prev);
-              const exists = [...newSet].some((p) => p.lat === lat && p.lon === lon);
-  
+            setSelectedPlaces((prevSet) => {
+              const newSet = new Set(prevSet);
+              const exists = [...newSet].some((p) => p.name === name);
+          
               if (exists) {
-                newSet.delete([...newSet].find((p) => p.lat === lat && p.lon === lon));
+                newSet.forEach((p) => {
+                  if (p.name === name) newSet.delete(p);
+                });
                 marker.setIcon(defaultIcon);
               } else {
                 newSet.add(placeData);
                 marker.setIcon(selectedIcon);
               }
-  
-              // ✅ Ensure data is sent to backend
-              onSelectionChange([...newSet]);
+          
+              onSelectionChange([...newSet]); // update parent with current selection
               return newSet;
             });
           });
+          
   
           return placeData;
         })
