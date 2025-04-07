@@ -3,34 +3,182 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #f5f5f5;
-  padding: 20px;
+  justify-content: flex-start;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fbc2eb, #a6c1ee); /* try switching to others */
+  padding: 40px 20px;
+  font-family: 'Segoe UI', sans-serif;
+  color: #0a192f;
 }
 
 /* Title */
 .map-container h2 {
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 15px;
+  font-size: 32px;
+  color: #0d47a1;
+  margin-bottom: 20px;
   text-align: center;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-/* Map Box */
-.map-box {
-  width: 90%;
+/* Map Box Wrapper */
+.map-wrapper {
+  width: 100%;
   max-width: 1200px;
   height: 500px;
-  border-radius: 10px;
+  border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.25);
+  background-color: #fff;
 }
 
-/* Responsive */
+/* Map Box (Leaflet Container) */
+.map-box {
+  height: 100%;
+  width: 100%;
+  z-index: 1000;
+  position: relative;
+  border-radius: 15px;
+}
+
+/* Loading and Error Messages */
+.loading-text,
+.error-text {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  color: #856404;
+  max-width: 600px;
+}
+
+/* Error Style */
+.error-text {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+}
+
+/* Leaflet Marker Enhancements */
+.leaflet-marker-icon,
+.leaflet-interactive {
+  pointer-events: auto !important;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.leaflet-marker-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Popup Styling */
+.leaflet-popup-content {
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-  .map-box {
+  .map-wrapper {
     height: 400px;
     width: 95%;
   }
+
+  .map-container h2 {
+    font-size: 26px;
+  }
+}
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.map-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', sans-serif;
+
+  background: linear-gradient(-45deg, #fbc2eb, #a6c1ee, #89f7fe, #66a6ff);
+  background-size: 400% 400%;
+  animation: gradientShift 20s ease infinite;
+
+  color: #0a192f;
+}
+.glass-card {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 25px;
+  margin-bottom: 30px;
+  width: 100%;
+  max-width: 900px;
+
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: transform 0.3s ease, opacity 0.5s ease;
+  animation: fadeInUp 1s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --------------------------------- */
+/* ✨ ADDITIONS FOR GLASS CARD EFFECT */
+/* --------------------------------- */
+
+.travel-details {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 25px;
+  margin-bottom: 30px;
+  width: 100%;
+  max-width: 900px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: transform 0.3s ease, opacity 0.5s ease;
+  animation: fadeInUp 1s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* ✨ Fade-in animation */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🎨 Animated background gradient */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 🔄 Updated map-container with animated gradient */
+.map-container {
+  background: linear-gradient(-45deg, #fbc2eb, #a6c1ee, #89f7fe, #66a6ff);
+  background-size: 400% 400%;
+  animation: gradientShift 20s ease infinite;
 }
