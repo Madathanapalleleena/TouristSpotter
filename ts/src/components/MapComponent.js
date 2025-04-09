@@ -6,20 +6,24 @@ import "../styles/MapComponent.css";
 const MAP_API_KEY = process.env.REACT_APP_GEOAPIFY_API_KEY || "c028660ae68f4d5d812137b17af9711c";
 
 const categoryMapping = {
-  "Archaeological Sites": "tourism.sights,heritage.culture",
-  "Temples": "tourism.sights,religion.place_of_worship",
+  "Archaeological Sites": "tourism.sights.archaeological_site,tourism.sights.memorial.tomb,tourism.sights.memorial.monument",
+  "Temples": "tourism.sights.place_of_worship.temple,religion.place_of_worship.hinduism,religion.place_of_worship.judaism,religion.place_of_worship.sikhism",
   "Coffee Shops": "catering.cafe,catering.restaurant",
   "Hill Stations": "natural.mountain",
-  "Beaches": "natural.beach,leisure.park",
-  "Wildlife & Safari": "leisure.zoo,natural.park",
+  "Beaches": "beach,beach.beach_resort,leisure.park",
+  "Wildlife & Safari": "national_park,natural.forest",
   "Adventure Sports": "sport.extreme",
   "Cultural Experiences": "heritage.culture",
-  "Weekend Getaways": "tourism.sights,natural.park",
+  "Weekend Getaways": "tourism.sights,natural.park,natural.mountain.peak",
   "Pilgrimage Spots": "tourism.sights",
   "Foodie Dreams": "catering.restaurant",
-  "Trekking Spots": "natural.mountain",
+  "Trekking Spots": "natural.mountain,camping",
   "Relaxation Spots": "leisure.spa,leisure.resort",
-  "Romantic Places": "tourism.sights,leisure.park",
+  "Romantic Places": "tourism.sights,leisure.park,leisure.spa",
+  "Nature":"natural",
+  "Camping":"camping",
+  "Sports":"sport,sport.stadium,sport.swimming_pool",
+  "Entertainment":"entertainment",
 };
 
 const MapComponent = ({ userPreferences, onSelectionChange, userId }) => {
@@ -74,8 +78,11 @@ const MapComponent = ({ userPreferences, onSelectionChange, userId }) => {
           const [lon, lat] = place.geometry.coordinates;
           const { name, address_line1, categories } = place.properties;
   
-          if (!lat || !lon) return null;
-  
+          if (!lat || !lon || !name) {
+            console.warn("Skipping invalid place:", place);
+            return null;
+          }          
+          
           const description = await fetchWikipediaSummary(name);
   
           const placeData = { lat, lon, name, address: address_line1, description };
@@ -147,6 +154,7 @@ const MapComponent = ({ userPreferences, onSelectionChange, userId }) => {
       );
   
       setPlacesList(updatedPlaces.filter(Boolean));
+      console.log("Final filtered places:", updatedPlaces.filter(Boolean).length);
     },
     [map, markersLayer, onSelectionChange, selectedPlaces]
   );
@@ -163,34 +171,49 @@ const MapComponent = ({ userPreferences, onSelectionChange, userId }) => {
       const selectedCategories = userPreferences.interests
         .flatMap((interest) => categoryMapping[interest]?.split(",") || [])
         .join(",");
-  
+      
       const baseUrl = "https://api.geoapify.com/v2/places";
-      const limit = 100;
+      const limit = 30;
       const apiKey = MAP_API_KEY;
   
       const filters = [
         `circle:74.8,34.1,400000`,   // Jammu & Kashmir
-        `circle:76.7,30.7,500000`,   // Punjab / Chandigarh
-        `circle:73.0,26.9,500000`,   // Rajasthan
-        `circle:77.1,28.6,500000`,   // Delhi / Haryana
+        `circle:76.0,32.1,250000`,   // Himachal Pradesh
+        `circle:77.1,28.6,300000`,   // Delhi
+        `circle:76.7,30.7,300000`,   // Punjab
+        `circle:76.0,29.0,300000`,   // Haryana
+        `circle:78.0,26.5,300000`,   // Uttarakhand
         `circle:80.9,26.8,500000`,   // Uttar Pradesh
         `circle:85.3,23.3,400000`,   // Bihar
-        `circle:84.0,21.3,400000`,   // Chhattisgarh
         `circle:86.1,23.6,400000`,   // Jharkhand
-        `circle:88.4,22.6,500000`,   // West Bengal
+        `circle:84.0,21.3,400000`,   // Chhattisgarh
         `circle:85.8,20.3,500000`,   // Odisha
+        `circle:88.4,22.6,500000`,   // West Bengal
         `circle:91.7,26.1,400000`,   // Assam
-        `circle:92.9,23.3,300000`,   // Tripura / Mizoram
-        `circle:76.2,10.5,500000`,   // Kerala
-        `circle:78.1,11.0,500000`,   // Tamil Nadu
-        `circle:73.8,18.5,500000`,   // Maharashtra
-        `circle:78.4,17.4,500000`,   // Telangana
-        `circle:77.6,15.5,500000`,   // Karnataka
-        `circle:80.0,23.0,500000`,   // Madhya Pradesh
+        `circle:92.9,23.3,300000`,   // Mizoram / Tripura
+        `circle:93.6,25.6,300000`,   // Manipur
+        `circle:94.0,27.0,250000`,   // Nagaland
+        `circle:94.7,28.2,250000`,   // Arunachal Pradesh
+        `circle:91.9,25.6,250000`,   // Meghalaya
+        `circle:73.0,26.9,500000`,   // Rajasthan
         `circle:70.7,22.7,500000`,   // Gujarat
+        `circle:80.0,23.0,500000`,   // Madhya Pradesh
+        `circle:73.8,18.5,500000`,   // Maharashtra
+        `circle:77.6,15.5,500000`,   // Karnataka
+        `circle:78.4,17.4,500000`,   // Telangana
         `circle:79.7,15.9,400000`,   // Andhra Pradesh
-        `circle:78.0,26.5,400000`,   // Uttarakhand
+        `circle:78.1,11.0,500000`,   // Tamil Nadu
+        `circle:76.2,10.5,500000`,   // Kerala
+        `circle:91.1,10.6,200000`,   // Andaman and Nicobar Islands (UT)
+        `circle:72.8,19.0,200000`,   // Dadra and Nagar Haveli and Daman and Diu (UT)
+        `circle:73.0,15.3,200000`,   // Goa
+        `circle:77.4,8.9,200000`,    // Lakshadweep (UT)
+        `circle:93.6,11.7,200000`,   // Puducherry (UT)
+        `circle:76.7,11.0,200000`,   // Karaikal (UT, part of Puducherry)
+        `circle:77.0,13.0,200000`,   // Chandigarh (UT)
+        `circle:92.7,20.3,200000`,   // Ladakh (UT)
       ];
+      
       
       
   
@@ -201,8 +224,13 @@ const MapComponent = ({ userPreferences, onSelectionChange, userId }) => {
       const responses = await Promise.all(
         urls.map((url) => fetch(url).then((res) => res.json()))
       );
-  
-      const allFeatures = responses.flatMap((res) => res.features || []);
+      const allFeatures = responses
+  .flatMap((res) => res.features || [])
+  .filter((f) => f.properties?.name && f.geometry?.coordinates?.length === 2);
+  console.log("Valid places to add to map:", allFeatures.length);
+
+
+      //const allFeatures = responses.flatMap((res) => res.features || []);
   
       if (allFeatures.length) {
         console.log(
