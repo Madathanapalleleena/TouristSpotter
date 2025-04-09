@@ -5,21 +5,24 @@ import { savePreferences } from "../utils/api";
 import "../styles/Preferences.css";
 
 const interests = [
-  { name: "Archaeological Sites", img: require("../assets/archaeology.jpg"), desc: "Explore ancient ruins." },
-  { name: "Temples", img: require("../assets/temples.jpg"), desc: "Visit grand temples and monasteries." },
-  { name: "Coffee Shops", img: require("../assets/coffee.jpg"), desc: "Enjoy cozy cafes and coffee blends." },
-  { name: "Hill Stations", img: require("../assets/hill-stations.jpg"), desc: "Escape to cool hill stations." },
-  { name: "Beaches", img: require("../assets/beaches.jpg"), desc: "Relax on beautiful beaches." },
-  { name: "Wildlife & Safari", img: require("../assets/wildlife.jpg"), desc: "Go on thrilling safaris." },
-  { name: "Adventure Sports", img: require("../assets/adventure.jpg"), desc: "Experience extreme sports." },
-  { name: "Cultural Experiences", img: require("../assets/culture.jpg"), desc: "Immerse in local cultures." },
-  { name: "Weekend Getaways", img: require("../assets/weekend.jpg"), desc: "Recharge with a short trip away from city hustle." },
-  { name: "Pilgrimage Spots", img: require("../assets/pilgrimage.jpg"), desc: "Visit sacred places and embark on a spiritual journey." },
-  { name: "Foodie Dreams", img: require("../assets/foodie.jpg"), desc: "Taste diverse local and international cuisines." },
-  { name: "Trekking Spots", img: require("../assets/trekking.jpg"), desc: "Challenge yourself with scenic trekking trails." },
-  { name: "Relaxation Spots", img: require("../assets/relax.jpg"), desc: "Unwind in tranquil resorts and retreats." },
-  { name: "Romantic Places", img: require("../assets/romantic.jpg"), desc: "Plan a dreamy getaway with your special someone." }
-];
+  { name: "Archaeological Sites", img: require("../assets/archaeology.jpg"), desc: "Explore ancient ruins. Walk through historical marvels that whisper stories of the past." },
+  { name: "Temples", img: require("../assets/temples.jpg"), desc: "Visit grand temples and monasteries. Feel the spiritual energy and architectural beauty come alive." },
+  { name: "Coffee Shops", img: require("../assets/coffee.jpg"), desc: "Enjoy cozy cafes and coffee blends. Perfect spots to unwind or have meaningful conversations." },
+  { name: "Hill Stations", img: require("../assets/hill-stations.jpg"), desc: "Escape to cool hill stations. Embrace nature’s calmness in mist-covered peaks and lush greenery." },
+  { name: "Beaches", img: require("../assets/beaches.jpg"), desc: "Relax on beautiful beaches. Soak up the sun, listen to the waves, and find your coastal bliss." },
+  { name: "Wildlife & Safari", img: require("../assets/wildlife.jpg"), desc: "Go on thrilling safaris. Witness wild animals in their natural habitats and feel the thrill of the jungle." },
+  { name: "Adventure Sports", img: require("../assets/adventure.jpg"), desc: "Experience extreme sports. Get your adrenaline rush with bungee jumping, rafting, and more." },
+  { name: "Cultural Experiences", img: require("../assets/culture.jpg"), desc: "Immerse in local cultures. Discover traditions, music, art, and heritage that make every place unique." },
+  { name: "Weekend Getaways", img: require("../assets/weekend.jpg"), desc: "Recharge with a short trip away from city hustle. Ideal for spontaneous breaks and mini adventures." },
+  { name: "Pilgrimage Spots", img: require("../assets/pilgrimage.jpg"), desc: "Visit sacred places and embark on a spiritual journey. Reconnect with your inner self in peaceful surroundings." },
+  { name: "Foodie Dreams", img: require("../assets/foodie.jpg"), desc: "Taste diverse local and international cuisines. From street food to fine dining, it's a treat for every palate." },
+  { name: "Trekking Spots", img: require("../assets/trekking.jpg"), desc: "Challenge yourself with scenic trekking trails. Perfect for adventure lovers and nature enthusiasts alike." },
+  { name: "Relaxation Spots", img: require("../assets/relax.jpg"), desc: "Unwind in tranquil resorts and retreats. Let go of stress and rejuvenate your mind and body." },
+  { name: "Romantic Places", img: require("../assets/romantic.jpg"), desc: "Plan a dreamy getaway with your special someone. Create unforgettable memories in enchanting locations." },
+  { name: "Nature", img: require("../assets/nature.jpg"), desc: "Breathe in the wild — let nature heal you.Reconnect with nature and explore the scenic beauty of forests, mountains, and rivers." },
+  { name: "Entertainment", img: require("../assets/ent.jpg"), desc: "Lights, camera, fun — dive into the world of entertainment! Enjoy theaters, amusement parks, and vibrant entertainment venues." },
+  { name: "Camping", img: require("../assets/camp.jpg"), desc: "Camp under the stars — your outdoor escape awaits! Pitch a tent under the stars and enjoy an unforgettable outdoor camping experience." },
+  { name: "Sports", img: require("../assets/sport.jpg"), desc: "Get in the game — feel the adrenaline rush! Discover locations for exciting sports, stadiums, and aquatic adventures." }];
 
 function Preferences({ setUserPreferences }) {
   const [selectedInterests, setSelectedInterests] = useState([]);
