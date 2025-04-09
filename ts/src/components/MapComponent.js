@@ -155,28 +155,65 @@ const MapComponent = ({ userPreferences, onSelectionChange, userId }) => {
 
   const fetchTouristSpots = useCallback(async () => {
     if (!userPreferences?.interests?.length || !map) return;
-
+  
     setLoading(true);
     setError("");
-
+  
     try {
       const selectedCategories = userPreferences.interests
         .flatMap((interest) => categoryMapping[interest]?.split(",") || [])
         .join(",");
-
-      const url = `https://api.geoapify.com/v2/places?categories=${selectedCategories}&filter=rect:68.1766,35.4940,97.3956,6.4627&limit=100&apiKey=${MAP_API_KEY}`;
-
-      console.log("Fetching URL:", url);
-
-      const response = await fetch(url);
-      const data = await response.json();
-
-      if (data.features && data.features.length) {
+  
+      const baseUrl = "https://api.geoapify.com/v2/places";
+      const limit = 100;
+      const apiKey = MAP_API_KEY;
+  
+      const filters = [
+        `circle:74.8,34.1,400000`,   // Jammu & Kashmir
+        `circle:76.7,30.7,500000`,   // Punjab / Chandigarh
+        `circle:73.0,26.9,500000`,   // Rajasthan
+        `circle:77.1,28.6,500000`,   // Delhi / Haryana
+        `circle:80.9,26.8,500000`,   // Uttar Pradesh
+        `circle:85.3,23.3,400000`,   // Bihar
+        `circle:84.0,21.3,400000`,   // Chhattisgarh
+        `circle:86.1,23.6,400000`,   // Jharkhand
+        `circle:88.4,22.6,500000`,   // West Bengal
+        `circle:85.8,20.3,500000`,   // Odisha
+        `circle:91.7,26.1,400000`,   // Assam
+        `circle:92.9,23.3,300000`,   // Tripura / Mizoram
+        `circle:76.2,10.5,500000`,   // Kerala
+        `circle:78.1,11.0,500000`,   // Tamil Nadu
+        `circle:73.8,18.5,500000`,   // Maharashtra
+        `circle:78.4,17.4,500000`,   // Telangana
+        `circle:77.6,15.5,500000`,   // Karnataka
+        `circle:80.0,23.0,500000`,   // Madhya Pradesh
+        `circle:70.7,22.7,500000`,   // Gujarat
+        `circle:79.7,15.9,400000`,   // Andhra Pradesh
+        `circle:78.0,26.5,400000`,   // Uttarakhand
+      ];
+      
+      
+  
+      const urls = filters.map(filter =>
+        `${baseUrl}?categories=${selectedCategories}&filter=${filter}&limit=${limit}&apiKey=${apiKey}`
+      );
+  
+      const responses = await Promise.all(
+        urls.map((url) => fetch(url).then((res) => res.json()))
+      );
+  
+      const allFeatures = responses.flatMap((res) => res.features || []);
+  
+      if (allFeatures.length) {
         console.log(
           "Fetched places:",
-          data.features.map((p) => ({ name: p.properties.name, lat: p.geometry.coordinates[1], lon: p.geometry.coordinates[0] }))
+          allFeatures.map((p) => ({
+            name: p.properties.name,
+            lat: p.geometry.coordinates[1],
+            lon: p.geometry.coordinates[0],
+          }))
         );
-        addMarkers(data.features);
+        addMarkers(allFeatures);
       } else {
         console.warn("No places found for the given preferences.");
         setError("No places found. Try different preferences.");
@@ -188,6 +225,7 @@ const MapComponent = ({ userPreferences, onSelectionChange, userId }) => {
       setLoading(false);
     }
   }, [map, userPreferences, addMarkers]);
+  
 
   useEffect(() => {
     fetchTouristSpots();
