@@ -72,10 +72,14 @@ const MapPage = () => {
         <p><strong>Starting Location:</strong> {userPreferences?.location || "N/A"}</p>
       </div>
 
-      <MapComponent 
-        userPreferences={userPreferences} 
-        onSelectionChange={(selected) => setSelectedPlaces(selected)} // ✅ Store selected places
-      />
+      <MapComponent
+  userPreferences={userPreferences}
+  onSelectionChange={(selected) => {
+    setSelectedPlaces(selected);
+  }}
+  userId={userId}
+/>
+
 
       <button onClick={handleSavePreferences}>Save Preferences</button>
     </div>
