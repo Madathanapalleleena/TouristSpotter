@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { FaBars, FaTimes, FaMapMarkedAlt } from "react-icons/fa";
+import { FaBars, FaTimes, FaMapMarkedAlt, FaComments } from "react-icons/fa";
+import Chatbot from "./chatbot"; // ✅ Make sure this path is correct
 import "../styles/Navbar.css";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const chatButtonRef = useRef(null);
 
   return (
     <nav className="navbar">
       {/* Logo with Travel Icon */}
       <div className="logo">
         <Link to="/">
-          <FaMapMarkedAlt className="logo-icon" /> 
+          <FaMapMarkedAlt className="logo-icon" />
           <span className="highlight">Tourist Spotter</span>
         </Link>
       </div>
@@ -24,6 +27,21 @@ const Navbar = () => {
         <Link to="/preferences" className="nav-link" onClick={() => setMenuOpen(false)}>Preferences</Link>
         <Link to="/map" className="nav-link" onClick={() => setMenuOpen(false)}>Map</Link>
         <Link to="/itinerary" className="nav-link" onClick={() => setMenuOpen(false)}>Itinerary</Link>
+
+        {/* Chatbot Toggle */}
+        <div className="chat-wrapper" ref={chatButtonRef}>
+          <button
+            onClick={() => setIsChatOpen(!isChatOpen)}
+            className="chat-toggle-btn"
+          >
+            <FaComments /> Chat
+          </button>
+          {isChatOpen && (
+            <div className="chat-popup">
+              <Chatbot isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Mobile Menu Icon */}
@@ -35,4 +53,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

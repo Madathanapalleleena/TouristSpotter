@@ -11,27 +11,41 @@ router.post("/register", async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // Check if user exists
+    // Validate required fields (NEW CHANGE)
+    if (!name || !email || !password) {
+      return res.status(400).json({ error: "All fields (name, email, password) are required" });
+    }
+
+    // ✅ Password validation
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({
+        error:
+          "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.",
+      });
+    }
+
+    // ✅ Check if user exists
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ error: "User already exists" });
 
-    // Hash password
+    // ✅ Hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Create new user
+    // ✅ Save user
     user = new User({ name, email, password: hashedPassword });
     await user.save();
 
-    // Generate JWT token
+    // ✅ JWT token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
     res.json({ token, userId: user._id, name: user.name, email: user.email });
   } catch (error) {
+    console.error("❌ Error in /register:", error);
     res.status(500).json({ error: "Server error" });
   }
 });
-
 // ✅ Login Route
 // ✅ Login Route - Make sure it sends token correctly
 router.post("/login", async (req, res) => {
@@ -60,9 +74,10 @@ router.post("/login", async (req, res) => {
       });
 
     } catch (error) {
-      console.error("Server error:", error);
-      res.status(500).json({ error: "Server error" });
+      console.error("❌ Error in /register:", error);
+      res.status(500).json({ error: "Internal Server Error", details: error.message });
     }
+    
 });
 
 // ✅ Get User Profile (Protected)
