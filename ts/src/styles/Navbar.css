@@ -12,6 +12,58 @@
   z-index: 1000;
 }
 
+.chat-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.chat-toggle-btn {
+  background: #2563eb; /* A clean blue */
+  border: none;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.chat-toggle-btn:hover {
+  background: #1e40af; /* Slightly darker blue on hover */
+}
+
+.chat-popup {
+  position: absolute;
+  top: 120%; /* Push it slightly below the toggle button */
+  right: 0;
+  z-index: 999;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  width: 350px; /* You can adjust width as needed */
+  max-height: 70vh;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  padding: 16px;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Optional: Smooth fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
 /* Logo Styling */
 .logo a {
   font-size: 1.8rem;
@@ -33,9 +85,11 @@
   font-size: 1.8rem;
   font-weight: bold;
   background: linear-gradient(90deg, #ffcc00, #ff6600);
+  background-clip: text; /* ✅ Standard property */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 
 /* Navigation Links */
 .nav-links {

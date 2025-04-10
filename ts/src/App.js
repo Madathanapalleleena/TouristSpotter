@@ -8,6 +8,7 @@ import MapPage from "./components/MapPage"; // ✅ Fixed import
 import Itinerary from "./components/Itinerary";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Chatbot from "./components/chatbot";
 import "./styles/App.css";
 
 function App() {
