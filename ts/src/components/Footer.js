@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaFacebook, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
+import axios from "axios";
 import "../styles/Footer.css";
 
 const Footer = () => {
+  const [visitCount, setVisitCount] = useState(null);
+
+  useEffect(() => {
+    axios
+      .post("http://localhost:5000/api/visit/track", { page: "home" })
+      .then((res) => setVisitCount(res.data.count))
+      .catch((err) => console.error("Visit tracking failed:", err));
+  }, []);
+
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -33,6 +43,13 @@ const Footer = () => {
             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
             <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"><FaYoutube /></a>
           </div>
+
+          {/* Moved visit count here */}
+          {visitCount !== null && (
+            <div className="visit-count-footer">
+              👣 Visited {visitCount} times
+            </div>
+          )}
         </div>
       </div>
 
@@ -45,4 +62,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
