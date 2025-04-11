@@ -25,6 +25,27 @@ const categoryMapping = {
   "Sports":"sport,sport.stadium,sport.swimming_pool",
   "Entertainment":"entertainment",
 };
+const interestColorMapping = {
+  "Archaeological Sites": "purple",
+  "Temples": "gold",
+  "Coffee Shops": "brown",
+  "Hill Stations": "green",
+  "Beaches": "teal",
+  "Wildlife & Safari": "orange",
+  "Adventure Sports": "red",
+  "Cultural Experiences": "darkblue",
+  "Weekend Getaways": "gray",
+  "Pilgrimage Spots": "darkgreen",
+  "Foodie Dreams": "pink",
+  "Trekking Spots": "darkred",
+  "Relaxation Spots": "lightblue",
+  "Romantic Places": "hotpink",
+  "Nature": "forestgreen",
+  "Camping": "khaki",
+  "Sports": "blue",
+  "Entertainment": "violet",
+};
+
 
 const MapComponent = ({ userPreferences, onSelectionChange, userId }) => {
   const [map, setMap] = useState(null);
@@ -47,92 +68,92 @@ const MapComponent = ({ userPreferences, onSelectionChange, userId }) => {
 
   const fetchWikipediaSummary = async (placeName) => {
     const wikiURL = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(placeName)}`;
-
     try {
       const response = await fetch(wikiURL);
       const data = await response.json();
       return data.extract || "No Wikipedia summary available.";
     } catch (error) {
-      console.error(`Error fetching Wikipedia data for ${placeName}:`, error);
+      console.error(`Error fetching Wikipedia for ${placeName}:`, error);
       return "No Wikipedia summary available.";
     }
   };
 
   const addMarkers = useCallback(
     async (places) => {
-      if (!map || !markersLayer) {
-        console.warn("Map or Markers Layer is not initialized.");
-        return;
-      }
-  
-      // ✅ Keep existing markers instead of clearing them completely
+      if (!map || !markersLayer) return;
+
       const existingMarkers = new Map();
       markersLayer.eachLayer((layer) => {
         if (layer.options && layer.options.placeData) {
           existingMarkers.set(layer.options.placeData.name, layer);
         }
       });
-  
+
       const updatedPlaces = await Promise.all(
         places.map(async (place) => {
           const [lon, lat] = place.geometry.coordinates;
           const { name, address_line1, categories } = place.properties;
-  
-          if (!lat || !lon || !name) {
-            console.warn("Skipping invalid place:", place);
-            return null;
-          }          
-          
+
+          if (!lat || !lon || !name) return null;
+
           const description = await fetchWikipediaSummary(name);
-  
           const placeData = { lat, lon, name, address: address_line1, description };
-  
+
+          const getColorByInterest = (categories) => {
+            const interests = userPreferences?.interests || [];
+            for (const interest of interests) {
+              const mappedCats = categoryMapping[interest]?.split(",") || [];
+              if (categories?.some((cat) => mappedCats.includes(cat))) {
+                return interestColorMapping[interest] || "blue";
+              }
+            }
+            return "blue";
+          };
+
+          const color = getColorByInterest(categories);
+
           const defaultIcon = L.icon({
-            iconUrl: `https://api.geoapify.com/v1/icon/?type=material&color=blue&size=large&icon=map-marker&apiKey=${MAP_API_KEY}`,
+            iconUrl: `https://api.geoapify.com/v1/icon/?type=material&color=${color}&size=large&icon=map-marker&apiKey=${MAP_API_KEY}`,
             iconSize: [30, 40],
             iconAnchor: [15, 40],
             popupAnchor: [0, -35],
           });
-  
+
           const selectedIcon = L.icon({
             iconUrl: `https://api.geoapify.com/v1/icon/?type=material&color=red&size=large&icon=map-marker&apiKey=${MAP_API_KEY}`,
             iconSize: [30, 40],
             iconAnchor: [15, 40],
             popupAnchor: [0, -35],
           });
-  
+
           const popupContent = `
-            <b>${name || "Unknown Place"}</b><br>
+            <b>${name}</b><br>
             ${address_line1 || "No Address Available"}<br>
-            <i>${categories?.join(", ") || "No category available"}</i><br>
+            <i>${categories?.join(", ") || "No category"}</i><br>
             <p>${description}</p>
           `;
-  
-          // ✅ If marker already exists, just update its icon
+
           if (existingMarkers.has(name)) {
             const existingMarker = existingMarkers.get(name);
             const isSelected = [...selectedPlaces].some((p) => p.name === name);
             existingMarker.setIcon(isSelected ? selectedIcon : defaultIcon);
-
             return placeData;
           }
-  
-          // ✅ Create a new marker if it doesn't exist
+
           const marker = L.marker([lat, lon], {
             icon: selectedPlaces.has(name) ? selectedIcon : defaultIcon,
-            placeData, // Store place data for reference
+            placeData,
           }).addTo(markersLayer);
-          
+
           marker.bindPopup(popupContent);
-  
           marker.on("mouseover", () => marker.openPopup());
           marker.on("mouseout", () => marker.closePopup());
-  
+
           marker.on("click", () => {
             setSelectedPlaces((prevSet) => {
               const newSet = new Set(prevSet);
               const exists = [...newSet].some((p) => p.name === name);
-          
+
               if (exists) {
                 newSet.forEach((p) => {
                   if (p.name === name) newSet.delete(p);
@@ -142,40 +163,32 @@ const MapComponent = ({ userPreferences, onSelectionChange, userId }) => {
                 newSet.add(placeData);
                 marker.setIcon(selectedIcon);
               }
-          
-              onSelectionChange([...newSet]); // update parent with current selection
+
+              onSelectionChange([...newSet]);
               return newSet;
             });
           });
-          
-  
+
           return placeData;
         })
       );
-  
+
       setPlacesList(updatedPlaces.filter(Boolean));
-      console.log("Final filtered places:", updatedPlaces.filter(Boolean).length);
     },
-    [map, markersLayer, onSelectionChange, selectedPlaces]
+    [map, markersLayer, onSelectionChange, selectedPlaces, userPreferences?.interests] // 👈 FIXED ESLINT WARNING
   );
-  
-  
 
   const fetchTouristSpots = useCallback(async () => {
     if (!userPreferences?.interests?.length || !map) return;
-  
     setLoading(true);
     setError("");
-  
+
     try {
       const selectedCategories = userPreferences.interests
         .flatMap((interest) => categoryMapping[interest]?.split(",") || [])
         .join(",");
-      
+
       const baseUrl = "https://api.geoapify.com/v2/places";
-      const limit = 30;
-      const apiKey = MAP_API_KEY;
-  
       const filters = [
         `circle:74.8,34.1,400000`,   // Jammu & Kashmir
         `circle:76.0,32.1,250000`,   // Himachal Pradesh
@@ -213,37 +226,20 @@ const MapComponent = ({ userPreferences, onSelectionChange, userId }) => {
         `circle:77.0,13.0,200000`,   // Chandigarh (UT)
         `circle:92.7,20.3,200000`,   // Ladakh (UT)
       ];
-      
-      
-      
-  
-      const urls = filters.map(filter =>
-        `${baseUrl}?categories=${selectedCategories}&filter=${filter}&limit=${limit}&apiKey=${apiKey}`
+
+      const urls = filters.map(
+        (filter) =>
+          `${baseUrl}?categories=${selectedCategories}&filter=${filter}&limit=30&apiKey=${MAP_API_KEY}`
       );
-  
-      const responses = await Promise.all(
-        urls.map((url) => fetch(url).then((res) => res.json()))
-      );
+
+      const responses = await Promise.all(urls.map((url) => fetch(url).then((res) => res.json())));
       const allFeatures = responses
-  .flatMap((res) => res.features || [])
-  .filter((f) => f.properties?.name && f.geometry?.coordinates?.length === 2);
-  console.log("Valid places to add to map:", allFeatures.length);
+        .flatMap((res) => res.features || [])
+        .filter((f) => f.properties?.name && f.geometry?.coordinates?.length === 2);
 
-
-      //const allFeatures = responses.flatMap((res) => res.features || []);
-  
       if (allFeatures.length) {
-        console.log(
-          "Fetched places:",
-          allFeatures.map((p) => ({
-            name: p.properties.name,
-            lat: p.geometry.coordinates[1],
-            lon: p.geometry.coordinates[0],
-          }))
-        );
         addMarkers(allFeatures);
       } else {
-        console.warn("No places found for the given preferences.");
         setError("No places found. Try different preferences.");
       }
     } catch (error) {
@@ -253,7 +249,6 @@ const MapComponent = ({ userPreferences, onSelectionChange, userId }) => {
       setLoading(false);
     }
   }, [map, userPreferences, addMarkers]);
-  
 
   useEffect(() => {
     fetchTouristSpots();
@@ -261,21 +256,39 @@ const MapComponent = ({ userPreferences, onSelectionChange, userId }) => {
 
   return (
     <div className="map-wrapper">
-      {loading && <div className="loading-text">Loading tourist spots...</div>}
-      {error && <div className="error-text">{error}</div>}
-      <div id="map" className="map-box"></div>
-
-      <div className="places-list">
-        <h3>Tourist Places</h3>
-        <ul>
-          {placesList.map((place, index) => (
-            <li key={index}>
-              <b>{place.name}</b> - {place.description}
-            </li>
-          ))}
-        </ul>
-      </div>
+    {loading && <div className="loading-text">Loading tourist spots...</div>}
+    {error && <div className="error-text">{error}</div>}
+    <div id="map" className="map-box"></div>
+  
+    {/* 🗺️ Themed Legend Box */}
+    <div className="map-legend">
+      <div className="legend-title">Tour Map Color Guide</div>
+      <ul>
+        {userPreferences?.interests?.map((interest) => (
+          <li key={interest}>
+            <span
+              className="legend-color"
+              style={{ backgroundColor: interestColorMapping[interest] || "blue" }}
+            ></span>
+            {interest}
+          </li>
+        ))}
+      </ul>
     </div>
+  
+    <div className="places-list">
+      <h3>Tourist Places</h3>
+      <ul>
+        {placesList.map((place, index) => (
+          <li key={index}>
+            <b>{place.name}</b> - {place.description}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+  
+
   );
 };
 
