@@ -19,10 +19,10 @@ const interests = [
   { name: "Trekking Spots", img: require("../assets/trekking.jpg"), desc: "Challenge yourself with scenic trekking trails. Perfect for adventure lovers and nature enthusiasts alike." },
   { name: "Relaxation Spots", img: require("../assets/relax.jpg"), desc: "Unwind in tranquil resorts and retreats. Let go of stress and rejuvenate your mind and body." },
   { name: "Romantic Places", img: require("../assets/romantic.jpg"), desc: "Plan a dreamy getaway with your special someone. Create unforgettable memories in enchanting locations." },
-  { name: "Nature", img: require("../assets/romantic.jpg"), desc: "Breathe in the wild — let nature heal you.Reconnect with nature and explore the scenic beauty of forests, mountains, and rivers." },
-  { name: "Entertainment", img: require("../assets/romantic.jpg"), desc: "Lights, camera, fun — dive into the world of entertainment! Enjoy theaters, amusement parks, and vibrant entertainment venues." },
-  { name: "Camping", img: require("../assets/romantic.jpg"), desc: "Camp under the stars — your outdoor escape awaits! Pitch a tent under the stars and enjoy an unforgettable outdoor camping experience." },
-  { name: "Sports", img: require("../assets/romantic.jpg"), desc: "Get in the game — feel the adrenaline rush! Discover locations for exciting sports, stadiums, and aquatic adventures." }];
+  { name: "Nature", img: require("../assets/nature.jpg"), desc: "Breathe in the wild — let nature heal you.Reconnect with nature and explore the scenic beauty of forests, mountains, and rivers." },
+  { name: "Entertainment", img: require("../assets/ent.jpg"), desc: "Lights, camera, fun — dive into the world of entertainment! Enjoy theaters, amusement parks, and vibrant entertainment venues." },
+  { name: "Camping", img: require("../assets/camp.jpg"), desc: "Camp under the stars — your outdoor escape awaits! Pitch a tent under the stars and enjoy an unforgettable outdoor camping experience." },
+  { name: "Sports", img: require("../assets/sport.jpg"), desc: "Get in the game — feel the adrenaline rush! Discover locations for exciting sports, stadiums, and aquatic adventures." }];
 
 function Preferences({ setUserPreferences }) {
   const [selectedInterests, setSelectedInterests] = useState([]);

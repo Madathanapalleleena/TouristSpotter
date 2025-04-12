@@ -132,17 +132,20 @@
   display: flex;
   align-items: center;
   margin-bottom: 6px;
-  color: #0b132b; /* deep navy blue text */
-  background-color: #ffcc00; /* bright golden background for contrast */
-  padding: 4px 8px;
+  padding: 8px 12px;
   border-radius: 6px;
+  background: rgba(15, 20, 40, 0.8); /* dark bluish translucent */
+  color: #ffcc00; /* gold text */
   font-weight: 600;
-  transition: transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .map-legend li:hover {
-  transform: scale(1.02);
-  background-color: #ffd633; /* lighter golden on hover */
+  background: rgba(20, 25, 50, 0.95);
+  transform: scale(1.03);
   cursor: pointer;
 }
 

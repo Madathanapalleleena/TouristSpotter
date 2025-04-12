@@ -28,22 +28,38 @@
   margin-bottom: 20px;
 }
 
+/* Title Styling */
 .title {
-  font-size: 3rem;
-  font-weight: bold;
-  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
+  font-family: 'Merriweather', serif;  /* New elegant font */
+  font-size: 2.1rem;  /* Slightly larger size */
+  font-weight: 700;  /* Bold weight for prominence */
+  text-transform: uppercase;  /* All caps for emphasis */
+  letter-spacing: 2px;  /* Add space between letters */
+  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);  /* Soft shadow for depth */
+  line-height: 1.5;  /* Improved line height for readability */
 }
 
+/* Highlight Styling */
 .highlight {
-  color: #ffcc00;
-  text-shadow: 3px 3px 10px rgba(255, 204, 0, 0.7);
+  color: #ffcc00;  /* Golden yellow color */
+  text-shadow: 3px 3px 10px rgba(255, 204, 0, 0.7);  /* Soft glow effect */
+  font-size: 2.2rem;  /* Slightly smaller than title */
+  font-weight: 600;  /* Semi-bold for distinction */
+  letter-spacing: 1.5px;  /* Slightly more space between letters */
+  text-transform: capitalize;  /* Capitalize the first letter of each word */
 }
 
+/* Description Styling */
 .description {
-  font-size: 1.5rem;
-  max-width: 700px;
-  margin: 10px auto;
-  line-height: 1.6;
+  font-family: 'Merriweather', serif;  /* New elegant font */
+  font-size: 1.2999rem;  /* Reduced size for better balance */
+  font-weight: 500;  /* Regular weight */
+  line-height: 1.6;  /* Improved readability */
+  max-width: 700px;  /* Constrained width for better readability */
+  margin: 10px auto;  /* Center aligned with margins */
+  text-align: center;  /* Centered text */
+  letter-spacing: 0.5px;  /* Slight space for elegance */
+  color: #f4f4f4;  /* Lighter color for better contrast */
 }
 
 .bold {
