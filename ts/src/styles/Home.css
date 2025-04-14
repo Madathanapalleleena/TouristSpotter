@@ -21,46 +21,44 @@
   padding: 40px 60px;
   border-radius: 15px;
   box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-/* Header Styling */
-.header {
-  margin-bottom: 20px;
+  max-width: 90%;  /* Ensure it adapts well to smaller screens */
+  text-align: center; /* Center-align all the text within the content box */
 }
 
 /* Title Styling */
 .title {
-  font-family: 'Merriweather', serif;  /* New elegant font */
-  font-size: 2.1rem;  /* Slightly larger size */
-  font-weight: 700;  /* Bold weight for prominence */
-  text-transform: uppercase;  /* All caps for emphasis */
-  letter-spacing: 2px;  /* Add space between letters */
-  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);  /* Soft shadow for depth */
-  line-height: 1.5;  /* Improved line height for readability */
+  font-family: 'Lora', serif;
+  font-size: 2.2rem;  /* Adjusted size for better balance */
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
+  line-height: 1.4;
+  margin-bottom: 15px; /* Space between title and highlight */
 }
 
 /* Highlight Styling */
 .highlight {
-  color: #ffcc00;  /* Golden yellow color */
-  text-shadow: 3px 3px 10px rgba(255, 204, 0, 0.7);  /* Soft glow effect */
-  font-size: 2.2rem;  /* Slightly smaller than title */
-  font-weight: 600;  /* Semi-bold for distinction */
-  letter-spacing: 1.5px;  /* Slightly more space between letters */
-  text-transform: capitalize;  /* Capitalize the first letter of each word */
+  color: #ffcc00;
+  text-shadow: 3px 3px 10px rgba(255, 204, 0, 0.6), 0 0 15px rgba(255, 204, 0, 0.5);
+  font-size: 3.5rem;  /* Slightly smaller for a more balanced look */
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: capitalize;
+  font-family: 'Lora', serif;
 }
 
 /* Description Styling */
 .description {
-  font-family: 'Merriweather', serif;  /* New elegant font */
-  font-size: 1.2999rem;  /* Reduced size for better balance */
-  font-weight: 500;  /* Regular weight */
-  line-height: 1.6;  /* Improved readability */
-  max-width: 700px;  /* Constrained width for better readability */
-  margin: 10px auto;  /* Center aligned with margins */
-  text-align: center;  /* Centered text */
-  letter-spacing: 0.5px;  /* Slight space for elegance */
-  color: #f4f4f4;  /* Lighter color for better contrast */
+  font-family: 'Lora', serif;
+  font-size: 1.25rem;  /* Slightly smaller for readability */
+  font-weight: 500;
+  line-height: 1.6;
+  max-width: 650px;  /* Better width control */
+  margin: 10px auto;
+  color: #f4f4f4;
 }
+
 
 .bold {
   font-weight: bold;

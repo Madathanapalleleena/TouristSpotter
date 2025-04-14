@@ -7,7 +7,7 @@ const fetch = require("node-fetch");
  */
 exports.savePreferences = async (req, res) => {
     try {
-        const { userId, interests, duration, startDate, location, selectedPlaces } = req.body;
+        const { userId, interests, duration, startDate, location, selectedPlaces,transportMedium} = req.body;
         
         // Validate selectedPlaces is an array
         if (!Array.isArray(selectedPlaces)) {
@@ -22,6 +22,7 @@ exports.savePreferences = async (req, res) => {
             preferences.startDate = startDate;
             preferences.location = location;
             preferences.selectedPlaces = selectedPlaces;
+            preferences.transportMedium = transportMedium;
         } else {
             preferences = new UserPreferences({
                 userId,
@@ -30,6 +31,7 @@ exports.savePreferences = async (req, res) => {
                 startDate,
                 location,
                 selectedPlaces,
+                transportMedium,
             });
         }
 

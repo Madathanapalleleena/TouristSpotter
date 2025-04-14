@@ -151,3 +151,19 @@
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   }
 }
+.preferences-select {
+  width: 80%;
+  max-width: 434px;
+  padding: 12px;
+  margin: 10px 0;
+  border: 2px solid #555;
+  background: #222;
+  color: white;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+.preferences-select:focus {
+  border-color: #ffcc00;
+  outline: none;
+}

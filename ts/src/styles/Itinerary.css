@@ -6,77 +6,66 @@ body {
 }
 
 .itinerary-container {
-  text-align: center;
-  padding: 20px;
-  background: rgba(0, 0, 0, 0.4); /* Darker overlay for better contrast */
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  max-width: 900px;
+  text-align: left; /* Changed to left align for better readability */
+  padding: 40px;
+  background: rgba(0, 0, 0, 0.5); /* Darker overlay for better contrast */
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  max-width: 1000px;
   margin: 50px auto;
-  color: #ffffff; /* Set text color to white */
+  color: #ffffff;
+  font-family: Arial, sans-serif; /* Improved font */
 }
 
-.itinerary-header {
-  font-size: 30px;
+h2 {
+  font-size: 36px;
   font-weight: bold;
-  color: #ffffff; /* White text */
-  margin-bottom: 15px;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+  margin-bottom: 20px;
+  color: #fff;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
-.itinerary-list {
-  list-style: none;
-  padding: 0;
-}
-
-.itinerary-item {
-  background: rgba(255, 255, 255, 0.85); /* Light background for items */
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: #ffffff; /* White text for items */
-}
-
-.itinerary-item:hover {
-  background-color: rgba(255, 255, 255, 1);
-  transition: 0.3s;
-}
-
-.itinerary-time {
-  font-size: 14px;
-  color: #ffffff; /* White text for time */
-}
-
-.itinerary-name {
-  font-size: 22px;
-  font-weight: 600;
-  color: #ffffff; /* White text for name */
-}
-
-.itinerary-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
+.error-text {
+  color: red;
+  font-size: 18px;
   font-weight: bold;
-  transition: 0.3s;
+  margin-top: 10px;
 }
 
-.itinerary-button:hover {
-  background-color: #0056b3;
-  transform: scale(1.05);
+#itinerary-details {
+  white-space: pre-wrap; /* Ensure whitespace is preserved */
+  word-wrap: break-word; /* Allow breaking long words */
+  line-height: 1.6;
+  margin-top: 30px;
+  font-size: 18px;
+  color: #f4f4f4;
+}
+
+ul, ol {
+  margin-left: 20px;
+  list-style-position: inside;
+}
+
+ul li, ol li {
+  margin-bottom: 10px;
+}
+
+hr {
+  border: 1px solid #ddd;
+  margin: 20px 0;
 }
 
 @media (max-width: 600px) {
-  .itinerary-item {
-    flex-direction: column;
-    text-align: center;
+  .itinerary-container {
+    padding: 20px;
+    margin: 20px;
+  }
+
+  h2 {
+    font-size: 28px;
+  }
+
+  #itinerary-details {
+    font-size: 16px;
   }
 }

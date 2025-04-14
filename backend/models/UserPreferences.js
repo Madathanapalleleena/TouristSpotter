@@ -6,6 +6,7 @@ const UserPreferencesSchema = new mongoose.Schema({
   duration: { type: Number, required: true },
   startDate: { type: Date, required: true },
   location: { type: String, required: true },
+  transportMedium: { type: String, required: false },
   selectedPlaces: [
     {
       name: { type: String, required: false }, // ✅ Changed required: true → false
@@ -22,6 +23,7 @@ UserPreferencesSchema.methods.getFormattedPreferences = function () {
     interests: this.interests.join(", "), // Convert array to string
     duration: this.duration,
     location: this.location,
+    transportMedium: this.transportMedium || "not specified",
     selectedPlaces: this.selectedPlaces.map(place => place.name).join(", ") // Extract names only
   };
 };
