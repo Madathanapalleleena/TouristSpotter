@@ -4,7 +4,7 @@ import sendChatToBot from "../utils/chatbotApi";
 
 export default function Chatbot({ isOpen, onClose }) {
   const [messages, setMessages] = useState([
-    { sender: "bot", text: "Hi there! How can I help you?" },
+    { sender: "bot", text: "Welcome to Trip Genie Chat Assistant! How can I help you?" },
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -21,15 +21,38 @@ export default function Chatbot({ isOpen, onClose }) {
 
   const handleSend = async () => {
     if (!input.trim()) return;
-
-    // Add user message immediately
+  
     const userMessage = { sender: "user", text: input };
     setMessages(prev => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
-
+  
+    const lowerInput = input.toLowerCase();
+  
+    // Custom bot responses for certain questions
+    const capabilitiesQuestions = [
+      "what can you do",
+      "how can you help me",
+      "what do you offer",
+      "your features",
+      "how can you assist",
+      "help options",
+      "what are you capable of",
+      "how can i use you"
+    ];
+  
+    const matchesCapabilities = capabilitiesQuestions.some(q =>
+      lowerInput.includes(q)
+    );
+  
+    if (matchesCapabilities) {
+      const response = "I'm here to help you with budget estimation, share information about popular places, suggest personalized itineraries, and more! Just ask me anything related to your travel plans!";
+      setMessages(prev => [...prev, { sender: "bot", text: response }]);
+      setIsLoading(false);
+      return;
+    }
+  
     try {
-      // Get bot response
       const response = await sendChatToBot(input);
       setMessages(prev => [...prev, { sender: "bot", text: response }]);
     } catch (error) {
@@ -42,6 +65,7 @@ export default function Chatbot({ isOpen, onClose }) {
       setIsLoading(false);
     }
   };
+  
 
   if (!isOpen) return null;
 
