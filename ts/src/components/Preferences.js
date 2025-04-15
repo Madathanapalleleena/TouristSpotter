@@ -30,6 +30,7 @@ function Preferences({ setUserPreferences }) {
   const [startDate, setStartDate] = useState("");
   const [location, setLocation] = useState("");
   const [loading, setLoading] = useState(false);
+  const [transportMedium, setTransportMedium] = useState("");
   const navigate = useNavigate();
 
   const userId = localStorage.getItem("userId");
@@ -53,8 +54,8 @@ function Preferences({ setUserPreferences }) {
       duration, 
       startDate, 
       location, 
-      selectedPlaces: [{ name: "Default Location", lat: 0, lon: 0 }]
- // At least send an empty array
+      selectedPlaces: [{ name: "Default Location", lat: 0, lon: 0 }],
+      transportMedium, 
     };
     
     console.log("Saving Preferences:", preferencesData); // ✅ Debugging purpose
@@ -101,6 +102,21 @@ function Preferences({ setUserPreferences }) {
 
         <label>Current Location:</label>
         <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} />
+        <label>Preferred Transport Medium:</label>
+        <select
+        value={transportMedium}
+        onChange={(e) => setTransportMedium(e.target.value)}
+        className="preferences-select"
+>
+        <option value="">Select Transport</option>
+        <option value="Car">Car</option>
+        <option value="Bike">Bike</option>
+        <option value="Bus">Bus</option>
+        <option value="Train">Train</option>
+        <option value="Flight">Flight</option>
+        <option value="Cab">Cab</option>
+        <option value="Walking">Walking</option>
+        </select>
 
         <button className="btn" onClick={handleNext} disabled={loading}>
           {loading ? "Saving..." : "Next"}
