@@ -1,71 +1,151 @@
 body {
-  background: url('../assets/blur.jpg') no-repeat center center fixed;
+  background: url('../assets/auth-bg.jpg') no-repeat center center fixed;
   background-size: cover;
   margin: 0;
   padding: 0;
+  font-family: Arial, sans-serif;
+  color: #ffffff;
+  position: relative;
+  z-index: 0;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: -1;
 }
 
 .itinerary-container {
-  text-align: left; /* Changed to left align for better readability */
   padding: 40px;
-  background: rgba(0, 0, 0, 0.5); /* Darker overlay for better contrast */
-  border-radius: 12px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.4); /* Darker overlay for better contrast */
+  border-radius: 15px; /* More rounded corners for a softer look */
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.4); /* Subtle shadow for depth */
   max-width: 1000px;
   margin: 50px auto;
-  color: #ffffff;
-  font-family: Arial, sans-serif; /* Improved font */
 }
 
-h2 {
-  font-size: 36px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #fff;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+.page-heading {
+  text-align: center;
+  font-size: 40px;
+  font-weight: 700; /* Bolder heading */
+  margin-bottom: 30px;
+  color: #ffc107;
+  text-shadow: 1px 1px 4px rgba(255, 193, 7, 0.6), 
+               0 0 6px rgba(255, 140, 0, 0.4);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .error-text {
-  color: red;
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 10px;
+  background-color: rgba(255, 77, 77, 0.3);
+  color: #ff4d4d;
+  border: 1px solid rgba(255, 77, 77, 0.5);
+  padding: 15px 20px;
+  border-radius: 10px; /* More rounded border */
+  font-size: 18px; /* Slightly larger font size for better readability */
+  font-weight: 600; /* Bold font for error messages */
+  margin: 20px auto;
+  max-width: 700px;
+  box-shadow: 0 4px 10px rgba(255, 77, 77, 0.2);
+  text-align: center;
 }
 
-#itinerary-details {
-  white-space: pre-wrap; /* Ensure whitespace is preserved */
-  word-wrap: break-word; /* Allow breaking long words */
+.itinerary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px; /* Increased gap for a cleaner look */
+}
+
+.itinerary-card {
+  background: rgba(255, 255, 255, 0.15); /* Slightly more opaque for clearer separation */
+  padding: 25px;
+  border-radius: 12px; /* More rounded corners for the card */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   line-height: 1.6;
-  margin-top: 30px;
   font-size: 18px;
-  color: #f4f4f4;
+  color: #fdfdfd;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.4); /* Improved text shadow for readability */
+}
+
+.itinerary-card:hover {
+  transform: translateY(-8px); /* Increased lift effect */
+  box-shadow: 0 8px 18px rgba(255, 215, 0, 0.8); /* Stronger glow on hover */
+}
+
+.itinerary-card strong,
+.itinerary-card b {
+  font-weight: 700;
+  color: #ffd700; /* Bright gold for emphasis */
+}
+
+.itinerary-card p {
+  margin-bottom: 15px; /* More space between paragraphs */
+  color: #ffffff;
 }
 
 ul, ol {
-  margin-left: 20px;
+  margin-left: 25px;
   list-style-position: inside;
 }
 
 ul li, ol li {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 hr {
   border: 1px solid #ddd;
-  margin: 20px 0;
+  margin: 25px 0; /* Increased spacing around horizontal rule */
 }
 
+/* Media query for smaller screens */
 @media (max-width: 600px) {
   .itinerary-container {
     padding: 20px;
     margin: 20px;
   }
 
-  h2 {
-    font-size: 28px;
+  .page-heading {
+    font-size: 32px; /* Adjust heading size on mobile */
   }
 
-  #itinerary-details {
-    font-size: 16px;
+  .itinerary-card {
+    font-size: 16px; /* Reduce card font size for mobile */
   }
 }
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 85vh;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4); /* subtle overlay if needed */
+  border-radius: 12px;
+}
+
+.loading-text {
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 600;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  padding: 20px 30px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  animation: glow 1.6s ease-in-out infinite alternate;
+}
+
+/* subtle glowing animation */
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px #fff, 0 0 10px #ffc107, 0 0 20px #ffc107;
+  }
+  to {
+    text-shadow: 0 0 10px #fff, 0 0 15px #ffd700, 0 0 25px #ffd700;
+  }
+}
+
