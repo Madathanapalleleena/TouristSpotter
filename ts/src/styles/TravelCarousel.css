@@ -1,11 +1,11 @@
 /* Fullscreen Background Carousel */
 .carousel-container {
-  position: fixed; /* Keeps it in the background */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
-  z-index: -1; /* Places it behind content */
+  height: 100vh; /* Only take full screen height */
+  z-index: -1;
   overflow: hidden;
 }
 
@@ -17,8 +17,28 @@
 .carousel-slide img {
   width: 100%;
   height: 100vh;
-  object-fit: cover; /* Prevents stretching */
-  image-rendering: crisp-edges;
+  object-fit: cover;
+  image-rendering: crisp-edges; 
+}
+.india-map-slide {
+  height: auto;
+  max-height: 100vh;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain !important;
+  object-position: top center !important;
+  display: block;
+  margin: 0 auto;
+  background-color: #fef3dc;
+  padding-top: 2rem; /* Optional: to push the image down a little if needed */
+}
+.carousel-slide {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* ⬅️ changed from center */
+  height: auto; /* ⬅️ remove 100vh here */
+  padding: 2rem 0;
+  background-color: #fef3dc; /* Match the India map background */
 }
 
 /* Hide carousel dots and arrows for a cleaner look */

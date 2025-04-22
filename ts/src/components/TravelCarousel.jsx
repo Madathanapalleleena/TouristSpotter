@@ -8,6 +8,7 @@ import goldentemple from "../assets/goldentemple.jpg";
 import lighthouse from "../assets/lighthouse.jpg";
 import lotustemple from "../assets/lotustemple.jpg";
 import redfort from "../assets/redfort.jpg";
+import india from "../assets/india.png";
 import "../styles/TravelCarousel.css";
 
 const TravelCarousel = () => {
@@ -23,6 +24,10 @@ const TravelCarousel = () => {
         transitionTime={1200}
         stopOnHover={false}
       >
+        <div className="carousel-slide" key="india">
+  <img src={india} alt="India Map" className="india-map-slide" />
+</div>
+
         <div className="carousel-slide" key="tajMahal">
           <img src={tajMahal} alt="Taj Mahal, Agra" />
         </div>

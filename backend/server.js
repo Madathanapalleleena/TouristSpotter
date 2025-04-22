@@ -1,5 +1,5 @@
 // server.js
-require("dotenv").config(); // Load environment variables at the top
+require("dotenv").config(); 
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
@@ -18,7 +18,7 @@ app.use(express.json()); // Parse JSON bodies
 // Connect to MongoDB before starting the server
 const startServer = async () => {
   try {
-    await connectDB(); // Connect to MongoDB (if you're using MongoDB)
+    await connectDB(); // Connect to MongoDB 
     console.log("✅ MongoDB Connected Successfully");
 
     // Register routes
