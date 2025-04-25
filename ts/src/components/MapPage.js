@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import MapComponent from "./MapComponent";
 import "../styles/Map.css";
-
-const userId = "REPLACE_WITH_LOGGED_IN_USER_ID"; // ✅ Replace dynamically with authenticated user ID
+import { useNavigate } from "react-router-dom";
+const userId = "REPLACE_WITH_LOGGED_IN_USER_ID"; 
 
 const MapPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [userPreferences, setUserPreferences] = useState(() => {
     const storedPreferences = localStorage.getItem("userPreferences");
     return location.state?.preferences ?? (storedPreferences ? JSON.parse(storedPreferences) : null);
@@ -52,6 +53,7 @@ const MapPage = () => {
       if (response.ok) {
         alert("Preferences saved successfully!");
         localStorage.setItem("userPreferences", JSON.stringify(preferencesToSave));
+        navigate('/itinerary'); 
       } else {
         throw new Error("Failed to save preferences");
       }
@@ -64,26 +66,31 @@ const MapPage = () => {
   return (
     <div className="map-container">
       <h2>Explore Your Personalized Travel Map</h2>
-
+  
       <div className="travel-details">
         <p><strong>Interests:</strong> {userPreferences?.interests?.join(", ") || "Not selected"}</p>
         <p><strong>Duration:</strong> {userPreferences?.duration || "N/A"} days</p>
         <p><strong>Start Date:</strong> {userPreferences?.startDate || "N/A"}</p>
         <p><strong>Starting Location:</strong> {userPreferences?.location || "N/A"}</p>
       </div>
-
+  
       <MapComponent
-  userPreferences={userPreferences}
-  onSelectionChange={(selected) => {
-    setSelectedPlaces(selected);
-  }}
-  userId={userId}
-/>
-
-
-      <button onClick={handleSavePreferences}>Save Preferences</button>
+        userPreferences={userPreferences}
+        onSelectionChange={(selected) => {
+          setSelectedPlaces(selected);
+        }}
+        userId={userId}
+      />
+  
+      {/* Move styled button here below the map */}
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
+        <button className="save-preferences-btn" onClick={handleSavePreferences}>
+          Save Preferences
+        </button>
+      </div>
     </div>
   );
+  
 };
 
 export default MapPage;

@@ -34,7 +34,6 @@ function Preferences({ setUserPreferences }) {
   const navigate = useNavigate();
 
   const userId = localStorage.getItem("userId");
-  // ✅ Dynamically replace this with actual userId
 
   const toggleInterest = (interest) => {
     setSelectedInterests((prev) =>
@@ -76,7 +75,7 @@ function Preferences({ setUserPreferences }) {
   return (
     <div className="preferences-container">
       <h2>Select Your Travel Preferences</h2>
-
+      <p className="subtext">You can select one or more preferences</p>
       <div className="preferences-grid">
         {interests.map((item) => (
           <div 
@@ -115,7 +114,6 @@ function Preferences({ setUserPreferences }) {
         <option value="Train">Train</option>
         <option value="Flight">Flight</option>
         <option value="Cab">Cab</option>
-        <option value="Walking">Walking</option>
         </select>
 
         <button className="btn" onClick={handleNext} disabled={loading}>
