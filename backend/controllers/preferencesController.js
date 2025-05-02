@@ -110,6 +110,9 @@ ${preferences.selectedPlaces.length > 0
   ? preferences.selectedPlaces.map((place, index) => `   ${index + 1}. ${place.name}`).join("\n") 
   : "   No specific places selected, please suggest based on interests."}
 - Preferred Transport: ${preferences.transportMedium}
+### **User Note:**
+- [Summary of key travel tips, advice, and additional notes specific to this trip.( Give point wise summary)]
+- [Include any specific cultural or food recommendations based on the user's interests]
 
 ### **Itinerary Details**:
 Please create a day-wise itinerary for ${preferences.duration} days.
@@ -136,9 +139,6 @@ Please create a day-wise itinerary for ${preferences.duration} days.
    - Notes: [Important reminders for the day, safety tips, best time to visit, etc.]
 
 ... (Repeat the above structure for the remaining days)
-
-### **User Note:**
-- [Summary of key travel tips, advice, and additional notes specific to this trip.]
 
 Please ensure that the itinerary is organized clearly, using appropriate headings, bullet points, and formatting. 
 The response should be user-friendly and easy to read.
