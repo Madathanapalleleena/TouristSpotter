@@ -70,6 +70,13 @@ body::before {
   color: #fdfdfd;
   text-shadow: 0 0 6px rgba(255, 255, 255, 0.4); /* Improved text shadow for readability */
 }
+.itinerary-card h3 {
+  color: #ffd700;
+  font-size: 26px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 6px;
+}
 
 .itinerary-card:hover {
   transform: translateY(-8px); /* Increased lift effect */

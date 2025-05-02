@@ -66,31 +66,29 @@ const MapPage = () => {
   return (
     <div className="map-container">
       <h2>Explore Your Personalized Travel Map</h2>
-  
+
       <div className="travel-details">
         <p><strong>Interests:</strong> {userPreferences?.interests?.join(", ") || "Not selected"}</p>
         <p><strong>Duration:</strong> {userPreferences?.duration || "N/A"} days</p>
         <p><strong>Start Date:</strong> {userPreferences?.startDate || "N/A"}</p>
         <p><strong>Starting Location:</strong> {userPreferences?.location || "N/A"}</p>
       </div>
-  
+
       <MapComponent
-        userPreferences={userPreferences}
-        onSelectionChange={(selected) => {
-          setSelectedPlaces(selected);
-        }}
-        userId={userId}
-      />
-  
-      {/* Move styled button here below the map */}
-      <div style={{ textAlign: "center", marginTop: "20px" }}>
-        <button className="save-preferences-btn" onClick={handleSavePreferences}>
-          Save Preferences
-        </button>
-      </div>
+  userPreferences={userPreferences}
+  onSelectionChange={(selected) => {
+    setSelectedPlaces(selected);
+  }}
+  userId={userId}
+/>
+
+
+<button className="save-preferences-btn" onClick={handleSavePreferences}>
+  Save Preferences
+</button>
+
     </div>
   );
-  
 };
 
 export default MapPage;

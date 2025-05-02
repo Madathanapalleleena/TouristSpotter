@@ -100,17 +100,52 @@ exports.generateItinerary = async (req, res) => {
             return res.status(404).json({ message: "User preferences not found" });
         }
 
-        // ✅ Prepare prompt for Gemini
         const userPrompt = `
-        Generate 3 different itinerary plans for a tourist in ${preferences.location}.
-        User preferences:
-        - Interests: ${preferences.interests.join(", ")}
-        - Trip Duration: ${preferences.duration} days
-        - Selected Places: ${preferences.selectedPlaces.map(p => p.name).join(", ")}
-        - Start Date: ${new Date(preferences.startDate).toDateString()}
+Generate 3 different detailed travel itineraries for a trip to ${preferences.location}, starting on ${new Date(preferences.startDate).toDateString()}, for ${preferences.duration} days. Each itinerary should be unique, offering varied combinations of tourist places, timings, and recommendations.
 
-        Each itinerary should include a daily schedule, recommended activities, and estimated visit durations.
-        `;
+**User Preferences:**
+- Interests: ${preferences.interests.join(", ")}
+- Selected Tourist Places:
+${preferences.selectedPlaces.length > 0 
+  ? preferences.selectedPlaces.map((place, index) => `   ${index + 1}. ${place.name}`).join("\n") 
+  : "   No specific places selected, please suggest based on interests."}
+- Preferred Transport: ${preferences.transportMedium}
+
+### **Itinerary Details**:
+Please create a day-wise itinerary for ${preferences.duration} days.
+
+- **Day 1:**
+   - [Place Name]: [Brief Description]
+   - [Suggested Time Slot] for visiting
+   - Travel time between places: [Calculated travel time using ${preferences.transportMedium}]
+   - Recommendations: [Cultural or food tips, entry fees, opening hours, etc.]
+   - Notes: [Important reminders for the day, safety tips, best time to visit, etc.]
+
+- **Day 2:**
+   - [Place Name]: [Brief Description]
+   - [Suggested Time Slot] for visiting
+   - Travel time between places: [Calculated travel time using ${preferences.transportMedium}]
+   - Recommendations: [Cultural or food tips, entry fees, opening hours, etc.]
+   - Notes: [Important reminders for the day, safety tips, best time to visit, etc.]
+
+- **Day 3:**
+   - [Place Name]: [Brief Description]
+   - [Suggested Time Slot] for visiting
+   - Travel time between places: [Calculated travel time using ${preferences.transportMedium}]
+   - Recommendations: [Cultural or food tips, entry fees, opening hours, etc.]
+   - Notes: [Important reminders for the day, safety tips, best time to visit, etc.]
+
+... (Repeat the above structure for the remaining days)
+
+### **User Note:**
+- [Summary of key travel tips, advice, and additional notes specific to this trip.]
+
+Please ensure that the itinerary is organized clearly, using appropriate headings, bullet points, and formatting. 
+The response should be user-friendly and easy to read.
+`;
+
+
+
 
         // ✅ Call Google Gemini API
         const geminiResponse = await fetch(
